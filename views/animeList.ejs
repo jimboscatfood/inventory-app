@@ -1,0 +1,21 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <ul>
+    <% if (locals.allAnime) {%>
+      <% allAnime.forEach(anime => { %>
+        <li>
+          Anime ID: <%= anime.id%><br>
+          Title: <%= anime.title%><br>
+          Views: <%= anime.views%>
+        </li>
+      <% }); %>
+    <% } %>
+  </ul>
+</body>
+</html>
