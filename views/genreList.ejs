@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <ul>
+    <% if (locals.allGenres) {%>
+      <% allGenres.forEach(genre => { %>
+        <li>
+          Genre ID: <%= genre.id%><br>
+          Genre Name: <%= genre.name%><br>
+        </li>
+      <% }); %>
+    <% } %>
+  </ul>
+</body>
+</html>
