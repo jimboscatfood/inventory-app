@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.animeInfo[0].title %></title>
+</head>
+<body>
+    <h1><%= animeInfo[0].title %></h1>
+    <p>Anime ID: <%= animeInfo[0].anime_id %><br>
+        Genre: <ul><% animeInfo.map(info => {%>
+        <li><a href="/genre/<%=info.genre_id%>"><%=info.name%></a></li>
+            <%});%></ul><br>
+          Views: <%= animeInfo[0].views%>
+    </p>
+</body>
+</html>
