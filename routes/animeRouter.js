@@ -10,4 +10,7 @@ animeRouter.get("/", animeController.showAllAnimeGet);
 //when user click on the anchor element on the animeList page, the page will assign the anime ID as the req param (":animeId")
 animeRouter.get("/:animeId", animeController.animeInfoGet);
 
+//route for the GET request to anime updating page
+animeRouter.get("/:animeId/update", animeController.animeUpdateGet);
+
 module.exports = animeRouter;

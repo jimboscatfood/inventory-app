@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Update: <%=locals.animeTitle%></title>
+  </head>
+  <body>
+    <form action="/anime/<%= locals.animeId %>/update" method="POST">
+      <label
+        >Anime Title:
+        <input
+          type="text"
+          name="title"
+          value="<%= animeTitle %>"
+          required
+      /></label><br>
+      <%if (locals.allGenres) {%>
+      <label>Genres:<br> 
+        <% allGenres.map(genre => {%>
+        <label><%= genre.name%><input
+          type="checkbox"
+          id = "<%=genre.id%>"
+          name="<%=genre.name%>"
+          value="<%= genre.name %>"
+          <%= locals.animeGenres.includes(genre.name)?'checked':"" %>
+      /></label></label><br>
+      <%});%>
+      <%};%>
+      <label>Views: <input type="number" name="views" value="<%=locals.animeViews%>"</label><br>
+      <button type="submit">Update Anime Info</button><br>
+    </form>
+    <a href="/">Back to home</a>
+  </body>
+</html>

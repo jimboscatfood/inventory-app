@@ -19,4 +19,21 @@ async function animeInfoGet(req, res) {
   });
 }
 
-module.exports = { showAllAnimeGet, animeInfoGet };
+async function animeUpdateGet(req, res) {
+  const animeInfo = await db.getAnimeInfo(req.params.animeId);
+  const allGenres = await db.getAllGenres();
+  const allAnimeGenres = allGenres.map((genre) => genre.name);
+  const animeTitle = animeInfo[0].title;
+  const animeId = animeInfo[0].anime_id;
+  const animeGenres = animeInfo.map((info) => info.name);
+  const animeViews = animeInfo[0].views;
+  res.render("updateAnime", {
+    animeTitle: animeTitle,
+    animeGenres: animeGenres,
+    animeViews: animeViews,
+    animeId: animeId,
+    allGenres: allGenres,
+  });
+}
+
+module.exports = { showAllAnimeGet, animeInfoGet, animeUpdateGet };
