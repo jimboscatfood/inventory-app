@@ -88,9 +88,15 @@ const animeUpdatePost = [
   },
 ];
 
+async function addAnimeGet(req, res) {
+  const allGenres = await db.getAllGenres();
+  res.render("addAnime", { allGenres: allGenres });
+}
+
 module.exports = {
   showAllAnimeGet,
   animeInfoGet,
   animeUpdateGet,
   animeUpdatePost,
+  addAnimeGet,
 };
