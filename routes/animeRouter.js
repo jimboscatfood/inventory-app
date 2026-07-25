@@ -12,5 +12,6 @@ animeRouter.get("/:animeId", animeController.animeInfoGet);
 
 //route for the GET request to anime updating page
 animeRouter.get("/:animeId/update", animeController.animeUpdateGet);
+animeRouter.post("/:animeId/update", animeController.animeUpdatePost);
 
 module.exports = animeRouter;
