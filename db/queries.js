@@ -12,7 +12,7 @@ async function getAllGenres() {
 
 async function getAllAnimeGenres() {
   const { rows } = await pool.query(
-    "SELECT anime_id,genre_id,title,name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id;",
+    "SELECT anime_id,genre_id,title,name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id ORDER BY anime_id, genre_id;",
   );
   //return a table with a column showing anime id and the other the corresponding genre/ genres
   return rows;
@@ -20,7 +20,7 @@ async function getAllAnimeGenres() {
 
 async function getAnimeInfo(animeId) {
   const { rows } = await pool.query(
-    "SELECT anime_id, genre_id, title, views, name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id WHERE anime_id = ($1) ",
+    "SELECT anime_id, genre_id, title, views, name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id WHERE anime_id = ($1);",
     [animeId],
   );
   return rows;
@@ -35,12 +35,29 @@ async function updateAnimeInfo(animeTitle, animeViews, animeGenres, animeId) {
   const animeGenresArr = Array.isArray(animeGenres)
     ? animeGenres
     : [animeGenres];
-  animeGenresArr.forEach((genreId) => {
-    pool.query("INSERT INTO anime_genre (anime_id, genre_id) VALUES ($1,$2)", [
-      animeId,
-      genreId,
-    ]);
-  });
+  for (const genreId of animeGenresArr) {
+    await pool.query(
+      "INSERT INTO anime_genre (anime_id, genre_id) VALUES ($1,$2)",
+      [animeId, genreId],
+    );
+  }
+}
+
+async function addAnime(animeTitle, animeViews, animeGenres) {
+  const newAnimeIdResult = await pool.query(
+    "INSERT INTO anime (title, views) VALUES ($1,$2) RETURNING id",
+    [animeTitle, animeViews],
+  );
+  const newAnimeId = newAnimeIdResult.rows[0].id;
+  const animeGenresArr = Array.isArray(animeGenres)
+    ? animeGenres
+    : [animeGenres];
+  for (const genreId of animeGenresArr) {
+    await pool.query(
+      "INSERT INTO anime_genre (anime_id, genre_id) VALUES ($1,$2)",
+      [newAnimeId, genreId],
+    );
+  }
 }
 
 module.exports = {
@@ -49,4 +66,5 @@ module.exports = {
   getAllAnimeGenres,
   getAnimeInfo,
   updateAnimeInfo,
+  addAnime,
 };

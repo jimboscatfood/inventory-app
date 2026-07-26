@@ -8,6 +8,8 @@ animeRouter.get("/", animeController.showAllAnimeGet);
 
 //route for the GET request to add anime page
 animeRouter.get("/add", animeController.addAnimeGet);
+//route for the POST request to add anime
+animeRouter.post("/add", animeController.addAnimePost);
 
 //route for the GET request to the anime viewing page
 //when user click on the anchor element on the animeList page, the page will assign the anime ID as the req param (":animeId")

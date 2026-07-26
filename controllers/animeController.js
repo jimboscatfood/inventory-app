@@ -84,7 +84,7 @@ const animeUpdatePost = [
 
     const { title, genre, views } = matchedData(req);
     await db.updateAnimeInfo(title, views, genre, animeId);
-    res.redirect("/");
+    res.redirect("/anime");
   },
 ];
 
@@ -93,10 +93,30 @@ async function addAnimeGet(req, res) {
   res.render("addAnime", { allGenres: allGenres });
 }
 
+const addAnimePost = [
+  validateAnimeItem,
+  async (req, res) => {
+    const allGenres = await db.getAllGenres();
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("addAnime", {
+        allGenres: allGenres,
+        errors: errors.array(),
+      });
+    }
+
+    const { title, genre, views } = matchedData(req);
+    await db.addAnime(title, views, genre);
+    res.redirect("/anime");
+  },
+];
+
 module.exports = {
   showAllAnimeGet,
   animeInfoGet,
   animeUpdateGet,
   animeUpdatePost,
   addAnimeGet,
+  addAnimePost,
 };
