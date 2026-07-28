@@ -20,7 +20,7 @@ async function getAllAnimeGenres() {
 
 async function getAnimeInfo(animeId) {
   const { rows } = await pool.query(
-    "SELECT anime_id, genre_id, title, views, name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id WHERE anime_id = ($1);",
+    "SELECT anime_id, genre_id, title, views, name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id WHERE anime_id = ($1) ORDER BY anime_id;",
     [animeId],
   );
   return rows;
@@ -60,6 +60,22 @@ async function addAnime(animeTitle, animeViews, animeGenres) {
   }
 }
 
+async function getAnimeByGenre(genreId) {
+  const { rows } = await pool.query(
+    "SELECT anime_id, genre_id, title, name FROM anime AS a LEFT JOIN anime_genre ON a.id = anime_id LEFT JOIN genre as b ON b.id = genre_id WHERE genre_id = ($1) ORDER BY anime_id;",
+    [genreId],
+  );
+  return rows;
+}
+
+async function addGenre(genreName) {
+  await pool.query("INSERT INTO genre (name) VALUES ($1)", [genreName]);
+}
+
+async function deleteGenre(genreId) {
+  await pool.query("DELETE FROM genre WHERE id = ($1)", [genreId]);
+}
+
 module.exports = {
   getAllAnime,
   getAllGenres,
@@ -67,4 +83,7 @@ module.exports = {
   getAnimeInfo,
   updateAnimeInfo,
   addAnime,
+  getAnimeByGenre,
+  addGenre,
+  deleteGenre,
 };

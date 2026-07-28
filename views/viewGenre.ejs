@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= locals.genreName %></title>
+</head>
+<body>
+    <% if (locals.animeByGenre.length !== 0) {%>
+    <h1><%= genreName %></h1>
+        Anime: <ul><% animeByGenre.forEach(anime => {%>
+        <li>Anime ID: <%=anime.anime_id%><br>
+            Anime Title: <a href="/anime/<%=anime.anime_id%>"><%=anime.title%></a></li>
+            <%});%></ul><br>
+    <%} else {%>
+    <h2>There is no anime in this category.. yet</h2>
+    <a href="/anime">List of Anime</a>
+    <%}%>
+    <a href="/genre">Back to Genre</a>
+</body>
+</html>
