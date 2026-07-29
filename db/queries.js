@@ -76,6 +76,10 @@ async function deleteGenre(genreId) {
   await pool.query("DELETE FROM genre WHERE id = ($1)", [genreId]);
 }
 
+async function deleteAnime(animeId) {
+  await pool.query("DELETE FROM anime WHERE id = ($1)", [animeId]);
+}
+
 module.exports = {
   getAllAnime,
   getAllGenres,
@@ -86,4 +90,5 @@ module.exports = {
   getAnimeByGenre,
   addGenre,
   deleteGenre,
+  deleteAnime,
 };

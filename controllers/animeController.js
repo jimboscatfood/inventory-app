@@ -112,6 +112,12 @@ const addAnimePost = [
   },
 ];
 
+async function deleteAnimePost(req, res) {
+  const animeId = req.params.animeId;
+  await db.deleteAnime(animeId);
+  res.redirect("/anime");
+}
+
 module.exports = {
   showAllAnimeGet,
   animeInfoGet,
@@ -119,4 +125,5 @@ module.exports = {
   animeUpdatePost,
   addAnimeGet,
   addAnimePost,
+  deleteAnimePost,
 };
