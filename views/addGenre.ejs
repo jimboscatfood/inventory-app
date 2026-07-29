@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Genre</title>
+  </head>
+  <body>
+    <%- include("./partials/errors.ejs")%>
+    <form action="/genre/add" method="POST">
+      <label>Genre Name: <input type="text" name="genreName" required /></label
+      ><br />
+      <button type="submit">Add Genre</button><br />
+    </form>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
