@@ -20,8 +20,21 @@ Therefore 3 database tables will be created:
 
 The webpages will include:
 
-1. an index page that allow the user to choose either "view category" or "view item"
+1. an index page that allow the user to choose either "view genre" or "view anime"
 2. a form that allows the user to create/ update anime item
 3. a form that allows the user to create/ update genre item
 4. a page for displaying all the anime/ or anime of the choosen category
 5. a page for displaying all the category
+
+Webpage structure:
+
+1. Index page:
+   a. clicking on view genre should show full list genre; same for view anime
+
+2. Anime items page:
+   a. a create button for adding a new anime
+   b. clicking on any one anime should show an item description page, which shows edit and delete options
+
+3. Genre items page:
+   a. list of genre
+   b. a create button to add genre

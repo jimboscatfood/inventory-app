@@ -112,11 +112,41 @@ const addAnimePost = [
   },
 ];
 
-async function deleteAnimePost(req, res) {
+async function deleteAnimePost(req, res, next) {
   const animeId = req.params.animeId;
   await db.deleteAnime(animeId);
   res.redirect("/anime");
 }
+
+async function confirmActionGet(req, res) {
+  const animeId = req.params.animeId;
+  res.render("password", { animeActionId: animeId });
+}
+
+const pwdErr = "Invalid password. Please try again.";
+const validatePassword = [
+  body("password")
+    .trim()
+    .equals(process.env.ADMIN_PASSWORD)
+    .withMessage(pwdErr),
+];
+
+const confirmActionPost = [
+  validatePassword,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const animeId = req.params.animeId;
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("password", {
+        animeActionId: animeId,
+        errors: errors.array(),
+      });
+    }
+
+    next();
+  },
+];
 
 module.exports = {
   showAllAnimeGet,
@@ -126,4 +156,6 @@ module.exports = {
   addAnimeGet,
   addAnimePost,
   deleteAnimePost,
+  confirmActionGet,
+  confirmActionPost,
 };

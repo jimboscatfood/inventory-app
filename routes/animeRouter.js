@@ -12,7 +12,12 @@ animeRouter.get("/add", animeController.addAnimeGet);
 animeRouter.post("/add", animeController.addAnimePost);
 
 //route for the POST request to delete an anime
-animeRouter.post("/:animeId/delete", animeController.deleteAnimePost);
+animeRouter.get("/:animeId/delete", animeController.confirmActionGet);
+animeRouter.post(
+  "/:animeId/delete",
+  animeController.confirmActionPost,
+  animeController.deleteAnimePost,
+);
 
 //route for the GET request to the anime viewing page
 //when user click on the anchor element on the animeList page, the page will assign the anime ID as the req param (":animeId")
